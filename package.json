@@ -1,0 +1,8 @@
+{
+  "name": "aoc2022",
+  "version": "0.0.0",
+  "description": "Advent of Code 2022",
+  "author": "Kamil Ogórek <kamil.ogorek@gmail.com>",
+  "license": "MIT",
+  "type": "module"
+}
