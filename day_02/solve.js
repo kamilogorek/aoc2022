@@ -1,5 +1,6 @@
 import { readLines } from "../helpers.js";
 import { equal } from "node:assert";
+import _ from "lodash";
 
 const DAY = `02`;
 
@@ -33,21 +34,21 @@ const findRightHand = (left, result) => {
 };
 
 const part1 = (input) =>
-  input
+  _(input)
     .map((round) => {
-      let [left, right] = round.split(" ").map((v) => getShape(v));
+      let [left, right] = round.split(" ").map(getShape);
       return rules[right][2] + getRoundResult(left, right);
     })
-    .reduce((a, b) => a + b);
+    .sum();
 
 const part2 = (input) =>
-  input
+  _(input)
     .map((round) => {
       let [left, fixedResult] = round.split(" ");
       const right = findRightHand(getShape(left), fixedResult);
       return rules[right][2] + getRoundResult(getShape(left), right);
     })
-    .reduce((a, b) => a + b);
+    .sum();
 
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);

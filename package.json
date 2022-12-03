@@ -4,5 +4,14 @@
   "description": "Advent of Code 2022",
   "author": "Kamil Ogórek <kamil.ogorek@gmail.com>",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "all": "find . -name 'day_*' | sort | xargs -I{} node {}/solve.js"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
 }
