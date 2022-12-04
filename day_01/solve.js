@@ -1,17 +1,16 @@
-import { readGroupedNumbers } from "../helpers.js";
 import { equal } from "node:assert";
-import _ from "lodash";
+import * as R from "ramda";
+import { readGroupedNumbers } from "../helpers.js";
 
 const DAY = `01`;
 
-const getCaloriesPerElf = (input) =>
-  _.chain(input)
-    .map(_.sum)
-    .sortBy((v) => -v);
+const getCaloriesPerElf = R.pipe(
+  R.map(R.sum),
+  R.sortBy((v) => -v)
+);
 
-const part1 = (input) => getCaloriesPerElf(input).first().value();
-
-const part2 = (input) => getCaloriesPerElf(input).take(3).sum().value();
+const part1 = R.pipe(getCaloriesPerElf, R.head);
+const part2 = R.pipe(getCaloriesPerElf, R.take(3), R.sum);
 
 const example = await readGroupedNumbers(`./day_${DAY}/example.txt`);
 const input = await readGroupedNumbers(`./day_${DAY}/input.txt`);

@@ -1,19 +1,16 @@
-import { readLines } from "../helpers.js";
 import { equal } from "node:assert";
-import _ from "lodash";
+import * as R from "ramda";
+import { readLines } from "../helpers.js";
 
 const DAY = `03`;
 
-const charToPriority = (char) => (char.codePointAt(0) - 96 + 58) % 58;
-const findIntersectionPriority = (groups) => _.intersection(...groups).map(charToPriority)[0];
+const splitInHalf = (l) => R.splitAt(l.length / 2, l);
+const intersectionAll = (a) => R.reduce(R.intersection, R.head(a), R.tail(a));
+const charToPriority = (c) => (c.codePointAt(0) - 96 + 58) % 58;
+const findIntersectionPriority = R.pipe(intersectionAll, R.head, charToPriority);
 
-const part1 = (input) =>
-  _(input)
-    .map((line) => _.chunk(line, line.length / 2))
-    .map(findIntersectionPriority)
-    .sum();
-
-const part2 = (input) => _(input).map(_.toArray).chunk(3).map(findIntersectionPriority).sum();
+const part1 = R.pipe(R.map(splitInHalf), R.map(findIntersectionPriority), R.sum);
+const part2 = R.pipe(R.map(Array.from), R.splitEvery(3), R.map(findIntersectionPriority), R.sum);
 
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);

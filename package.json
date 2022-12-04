@@ -9,7 +9,7 @@
     "all": "find . -name 'day_*' | sort | xargs -I{} node {}/solve.js"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "ramda": "^0.28.0"
   },
   "prettier": {
     "printWidth": 120

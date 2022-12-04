@@ -1,18 +1,15 @@
-import { readLines } from "../helpers.js";
 import { equal } from "node:assert";
-import _ from "lodash";
+import * as R from "ramda";
+import { readLines } from "../helpers.js";
 
 const DAY = `04`;
 
-const getAssignments = _.unary(_.flow([_.partialRight(_.split, "-"), _.partialRight(_.map, _.toInteger)]));
-const getPairs = _.unary(_.flow([_.partialRight(_.split, ","), _.partialRight(_.flatMap, getAssignments)]));
-
 const isContained = ([mFrom, mTo, nFrom, nTo]) => (mFrom >= nFrom && mTo <= nTo) || (nFrom >= mFrom && nTo <= mTo);
 const isOverlapping = ([mFrom, mTo, nFrom, nTo]) => mTo >= nFrom && mFrom <= nTo;
+const getPairs = R.pipe(R.split(","), R.map(R.pipe(R.split("-"), R.map(Number))), R.flatten);
 
-const part1 = (input) => _(input).map(getPairs).filter(isContained).size();
-
-const part2 = (input) => _(input).map(getPairs).filter(isOverlapping).size();
+const part1 = R.pipe(R.map(getPairs), R.filter(isContained), R.length);
+const part2 = R.pipe(R.map(getPairs), R.filter(isOverlapping), R.length);
 
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);

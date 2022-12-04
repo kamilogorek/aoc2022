@@ -1,6 +1,6 @@
-import { readLines } from "../helpers.js";
 import { equal } from "node:assert";
-import _ from "lodash";
+import * as R from "ramda";
+import { readLines } from "../helpers.js";
 
 const DAY = `02`;
 
@@ -33,22 +33,22 @@ const findRightHand = (left, result) => {
   if (result === "Z") return rules[left][1]; // win
 };
 
-const part1 = (input) =>
-  _(input)
-    .map((round) => {
-      let [left, right] = round.split(" ").map(getShape);
-      return rules[right][2] + getRoundResult(left, right);
-    })
-    .sum();
+const part1 = R.pipe(
+  R.map((round) => {
+    let [left, right] = round.split(" ").map(getShape);
+    return rules[right][2] + getRoundResult(left, right);
+  }),
+  R.sum
+);
 
-const part2 = (input) =>
-  _(input)
-    .map((round) => {
-      let [left, fixedResult] = round.split(" ");
-      const right = findRightHand(getShape(left), fixedResult);
-      return rules[right][2] + getRoundResult(getShape(left), right);
-    })
-    .sum();
+const part2 = R.pipe(
+  R.map((round) => {
+    let [left, fixedResult] = round.split(" ");
+    const right = findRightHand(getShape(left), fixedResult);
+    return rules[right][2] + getRoundResult(getShape(left), right);
+  }),
+  R.sum
+);
 
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
