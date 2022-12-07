@@ -1,4 +1,5 @@
 import { equal } from "node:assert";
+import * as R from "ramda";
 import { readLines } from "../helpers.js";
 
 const DAY = `00`;
