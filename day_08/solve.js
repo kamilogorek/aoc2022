@@ -4,68 +4,41 @@ import { readLines } from "../helpers.js";
 
 const DAY = `08`;
 
-const isVisible = (trees, row, col) => {
-  const height = trees[row][col];
-  const left = trees[row].slice(0, col).every((val) => val < height);
-  const right = trees[row].slice(col + 1).every((val) => val < height);
-  const up = trees
-    .slice(0, row)
-    .reduce((acc, r) => [...acc, r[col]], [])
-    .every((val) => val < height);
-  const down = trees
-    .slice(row + 1)
-    .reduce((acc, r) => [...acc, r[col]], [])
-    .every((val) => val < height);
-  return left || right || up || down;
-};
+const parseTrees = R.map(
+  R.pipe(
+    R.split(""),
+    R.map((v) => parseInt(v, 10))
+  )
+);
 
-const getScenicScore = (trees, row, col) => {
-  const height = trees[row][col];
+const incWhileSmaller = (limit) => (acc, value) => value >= limit ? R.reduced(R.inc(acc)) : R.inc(acc);
 
-  let leftScore = 0;
-  trees[row]
-    .slice(0, col)
-    .reverse()
-    .some((value) => {
-      leftScore++;
-      return value >= height;
-    });
+const isTreeVisible = (trees, row, col) =>
+  R.any(R.all(R.gt(trees[row][col])))([
+    R.take(col, trees[row]), // left
+    R.drop(col + 1, trees[row]), // right
+    R.take(row, trees).flatMap(R.nth(col)), // up
+    R.drop(row + 1, trees).flatMap(R.nth(col)), // down
+  ]);
 
-  let rightScore = 0;
-  trees[row].slice(col + 1).some((value) => {
-    rightScore++;
-    return value >= height;
-  });
-
-  let upScore = 0;
-  trees
-    .slice(0, row)
-    .reduce((acc, r) => [...acc, r[col]], [])
-    .reverse()
-    .some((value) => {
-      upScore++;
-      return value >= height;
-    });
-
-  let downScore = 0;
-  trees
-    .slice(row + 1)
-    .reduce((acc, r) => [...acc, r[col]], [])
-    .some((value) => {
-      downScore++;
-      return value >= height;
-    });
-
-  return leftScore * upScore * rightScore * downScore;
-};
+const getTreeScenicScore = (trees, row, col) =>
+  R.pipe(
+    R.map(R.reduce(incWhileSmaller(trees[row][col]), 0)),
+    R.reduce(R.multiply, 1)
+  )([
+    R.reverse(R.take(col, trees[row])), // left
+    R.drop(col + 1, trees[row]), // right
+    R.reverse(R.take(row, trees).flatMap(R.nth(col))), // up
+    R.drop(row + 1, trees).flatMap(R.nth(col)), // down
+  ]);
 
 const part1 = (input) => {
-  const trees = input.map((v) => v.split("").map((v) => parseInt(v, 10)));
-  let visibleTrees = input.length * 2 + (input[0].length - 2) * 2;
+  const trees = parseTrees(input);
+  let visibleTrees = input.length * 2 + (input[0].length - 2) * 2; // initial edges
 
   for (let i = 1; i < input.length - 1; i++) {
     for (let j = 1; j < input[0].length - 1; j++) {
-      if (isVisible(trees, i, j)) {
+      if (isTreeVisible(trees, i, j)) {
         visibleTrees += 1;
       }
     }
@@ -75,16 +48,16 @@ const part1 = (input) => {
 };
 
 const part2 = (input) => {
-  const trees = input.map((v) => v.split("").map((v) => parseInt(v, 10)));
+  const trees = parseTrees(input);
   let scenicScores = [];
 
   for (let i = 1; i < input.length - 1; i++) {
     for (let j = 1; j < input[0].length - 1; j++) {
-      scenicScores.push(getScenicScore(trees, i, j));
+      scenicScores.push(getTreeScenicScore(trees, i, j));
     }
   }
 
-  return scenicScores.sort((a, b) => b - a)[0]
+  return R.head(R.sort((a, b) => b - a, scenicScores));
 };
 
 const example = await readLines(`./day_${DAY}/example.txt`);
