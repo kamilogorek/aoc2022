@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "all": "find . -name 'day_*' | sort | xargs -I{} node {}/solve.js"
+    "all": "find . -name 'day_*' | sort | xargs -I{} time node {}/solve.js"
   },
   "dependencies": {
     "ramda": "^0.28.0"
