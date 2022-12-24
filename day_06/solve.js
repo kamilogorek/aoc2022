@@ -41,10 +41,14 @@ const part2 = ([buffer] = input) => takeWhileNUnique(buffer, 14).length + 1;
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 7);
-equal(await part1(input), 1134);
+try {
+  equal(await part1(example), 7);
+  equal(await part1(input), 1134);
 
-equal(await part2(example), 19);
-equal(await part2(input), 2263);
+  equal(await part2(example), 19);
+  equal(await part2(input), 2263);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

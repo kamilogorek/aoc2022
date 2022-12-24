@@ -104,14 +104,10 @@ const mergeRows = (a, b) => {
 const simulateFall = (chamber, coords, flow) => {
   const block = new Block(coords);
 
-  console.log("x", block.x);
-
   block.shift(flow.next().value);
   block.shift(flow.next().value);
   block.shift(flow.next().value);
   block.shift(flow.next().value);
-
-  console.log("x", block.x);
 
   let y = 0;
   let res = colliding(chamber, block, y);
@@ -121,28 +117,18 @@ const simulateFall = (chamber, coords, flow) => {
     block.shift(flow.next().value);
   }
 
-  // console.log(`collide at ${res.offset}`);
-
   if (res.offset === 0) {
     chamber.push(...block.toRows());
   } else {
     const rows = block.toRows();
-    console.log(rows);
     for (let i = 0; i < res.offset; i++) {
       if (chamber[chamber.length - 1 - i]) {
-        console.log("merge");
-        console.log(rows[i].join(""));
-        console.log(chamber[chamber.length - 1 - i].join(""));
-        console.log(mergeRows(rows[i], chamber[chamber.length - 1 - i]).join(""));
-
         rows[i] = mergeRows(rows[i], chamber[chamber.length - 1 - i]);
       }
     }
     for (let i = 0; i < res.offset; i++) {
       chamber.pop();
     }
-    console.log(chamber.length);
-    console.log(rows);
     chamber.push(...rows);
   }
 };
@@ -152,8 +138,6 @@ const colliding = (chamber, block, y) => {
   const lastBlockRow = rows[rows.length - 1];
   const prevLastBlockRow = rows[rows.length - 2];
   const lastChamberRow = chamber[chamber.length - 1 - y];
-  // console.log("last chamber:", lastChamberRow.join(""));
-  // console.log("last row:", lastBlockRow.join(""));
 
   for (let i = 1; i <= 7; i++) {
     if (lastChamberRow[i] === BLOCK && lastBlockRow[i] === BLOCK) {
@@ -181,7 +165,7 @@ const part1 = (input) => {
     simulateFall(chamber, shapesGenerator.next().value, flowGenerator);
   }
 
-  printChamber(chamber);
+  // printChamber(chamber);
 };
 
 const part2 = (input) => {};
@@ -189,10 +173,14 @@ const part2 = (input) => {};
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 3068);
-equal(await part1(input), +Infinity);
+try {
+  equal(await part1(example), 3068);
+  equal(await part1(input), +Infinity);
 
-equal(await part2(example), +Infinity);
-equal(await part2(input), +Infinity);
+  equal(await part2(example), +Infinity);
+  equal(await part2(input), +Infinity);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

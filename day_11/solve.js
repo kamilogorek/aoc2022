@@ -63,10 +63,14 @@ const part2 = (input) => solve(input, 10000, true);
 const example = await readGroupedLines(`./day_${DAY}/example.txt`);
 const input = await readGroupedLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 10605);
-equal(await part1(input), 64032);
+try {
+  equal(await part1(example), 10605);
+  equal(await part1(input), 64032);
 
-equal(await part2(example), 2713310158);
-equal(await part2(input), 12729522272);
+  equal(await part2(example), 2713310158);
+  equal(await part2(input), 12729522272);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

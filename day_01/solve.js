@@ -15,10 +15,14 @@ const part2 = R.pipe(getCaloriesPerElf, R.take(3), R.sum);
 const example = await readGroupedNumbers(`./day_${DAY}/example.txt`);
 const input = await readGroupedNumbers(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 24000);
-equal(await part1(input), 72017);
+try {
+  equal(await part1(example), 24000);
+  equal(await part1(input), 72017);
 
-equal(await part2(example), 45000);
-equal(await part2(input), 212520);
+  equal(await part2(example), 45000);
+  equal(await part2(input), 212520);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

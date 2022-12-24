@@ -15,10 +15,14 @@ const part2 = R.pipe(R.map(Array.from), R.splitEvery(3), R.map(findIntersectionP
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 157);
-equal(await part1(input), 8123);
+try {
+  equal(await part1(example), 157);
+  equal(await part1(input), 8123);
 
-equal(await part2(example), 70);
-equal(await part2(input), 2620);
+  equal(await part2(example), 70);
+  equal(await part2(input), 2620);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

@@ -52,10 +52,14 @@ const part2 = (input) => {};
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 64);
-equal(await part1(input), 4364);
+try {
+  equal(await part1(example), 64);
+  equal(await part1(input), 4364);
 
-// equal(await part2(example), +Infinity);
-// equal(await part2(input), +Infinity);
+  // equal(await part2(example), +Infinity);
+  // equal(await part2(input), +Infinity);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

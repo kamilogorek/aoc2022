@@ -25,7 +25,7 @@ const drawMap = (map) => {
   }
 
   console.log(display.map((l) => l.join("")).join("\n"));
-  console.log("\033[H");
+  console.log("0o33[H");
 };
 
 const parseInput = (input) =>
@@ -140,10 +140,14 @@ export const part2 = (input) => {
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 24);
-equal(await part1(input), 793);
+try {
+  equal(await part1(example), 24);
+  equal(await part1(input), 793);
 
-equal(await part2(example), 93);
-equal(await part2(input), 24166);
+  equal(await part2(example), 93);
+  equal(await part2(input), 24166);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

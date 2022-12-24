@@ -14,10 +14,14 @@ const part2 = R.pipe(R.map(getPairs), R.filter(isOverlapping), R.length);
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 2);
-equal(await part1(input), 526);
+try {
+  equal(await part1(example), 2);
+  equal(await part1(input), 526);
 
-equal(await part2(example), 4);
-equal(await part2(input), 886);
+  equal(await part2(example), 4);
+  equal(await part2(input), 886);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

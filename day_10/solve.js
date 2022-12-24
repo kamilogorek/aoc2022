@@ -57,12 +57,13 @@ const part2 = (input) => {
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 13140);
-equal(await part1(input), 12560);
+try {
+  equal(await part1(example), 13140);
+  equal(await part1(input), 12560);
 
-equal(
-  await part2(example),
-  `
+  equal(
+    await part2(example),
+    `
 ##..##..##..##..##..##..##..##..##..##..
 ###...###...###...###...###...###...###.
 ####....####....####....####....####....
@@ -70,10 +71,10 @@ equal(
 ######......######......######......####
 #######.......#######.......#######.....
 `.trim()
-);
-equal(
-  await part2(input),
-  `
+  );
+  equal(
+    await part2(input),
+    `
 ###..#....###...##..####.###...##..#....
 #..#.#....#..#.#..#.#....#..#.#..#.#....
 #..#.#....#..#.#..#.###..###..#....#....
@@ -81,6 +82,9 @@ equal(
 #....#....#....#..#.#....#..#.#..#.#....
 #....####.#....#..#.#....###...##..####.
 `.trim()
-);
+  );
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

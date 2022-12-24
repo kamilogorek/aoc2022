@@ -6,10 +6,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "all": "find . -name 'day_*' | grep -v day_00 | sort | xargs -I{} time bun {}/solve.js"
+    "all": "find . -name 'day_*' | grep -v day_00 | sort | xargs -I{} node {}/solve.js",
+    "time": "find . -name 'day_*' | grep -v day_00 | sort | xargs -I{} time node {}/solve.js"
   },
   "dependencies": {
-    "cbuffer": "^2.2.0",
     "mathjs": "^11.5.0",
     "node-dijkstra": "^2.5.0",
     "ramda": "^0.28.0"

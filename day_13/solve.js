@@ -46,10 +46,14 @@ const part2 = (input) => {
 const example = await readGroupedLines(`./day_${DAY}/example.txt`);
 const input = await readGroupedLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 13);
-equal(await part1(input), 5684);
+try {
+  equal(await part1(example), 13);
+  equal(await part1(input), 5684);
 
-equal(await part2(example), 140);
-equal(await part2(input), 22932);
+  equal(await part2(example), 140);
+  equal(await part2(input), 22932);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}

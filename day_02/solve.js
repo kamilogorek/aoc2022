@@ -53,10 +53,14 @@ const part2 = R.pipe(
 const example = await readLines(`./day_${DAY}/example.txt`);
 const input = await readLines(`./day_${DAY}/input.txt`);
 
-equal(await part1(example), 15);
-equal(await part1(input), 15572);
+try {
+  equal(await part1(example), 15);
+  equal(await part1(input), 15572);
 
-equal(await part2(example), 12);
-equal(await part2(input), 16098);
+  equal(await part2(example), 12);
+  equal(await part2(input), 16098);
 
-console.log(`Day ${DAY} completed ✔️`);
+  console.log(`Day ${DAY} completed ✔️`);
+} catch (e) {
+  console.log(`Day ${DAY} failed 𝗫 - ${e.message}`);
+}
