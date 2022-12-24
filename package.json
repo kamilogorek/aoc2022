@@ -9,6 +9,7 @@
     "all": "find . -name 'day_*' | grep -v day_00 | sort | xargs -I{} time bun {}/solve.js"
   },
   "dependencies": {
+    "cbuffer": "^2.2.0",
     "mathjs": "^11.5.0",
     "node-dijkstra": "^2.5.0",
     "ramda": "^0.28.0"
